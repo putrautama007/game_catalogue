@@ -9,57 +9,42 @@
 import Foundation
 import SwiftUI
 
-//struct ContentView: View {
-//    var body: some View {
-//        TabView {
-//            GameListView()
-//                .tabItem {
-//                    Image(systemName: "keyboard")
-//                    Text("Game")
-//            }
-//            ProfileView()
-//                .tabItem {
-//                    Image(systemName: "person.fill")
-//                    Text("About")
-//            }
-//        }
-//    }
-//}
 struct ContentView : View {
     @ObservedObject var gameViewModel =  GameViewModel()
     var body: some View {
         TabView {
-           NavigationView {
-                      VStack(alignment: .center) {
-                          if gameViewModel.loading {
-                              LoadingIndicator(color: Color.blue, size: 50)
-                          } else {
-                              if (gameViewModel.games.results.count > 0) {
-                                  List(gameViewModel.games.results) { game in
-                                      NavigationLink(destination: GameDetailView()){
-                                          GameRow(game: game)
-                                      }
-                                   
-                                  }
-                              } else {
-                                  VStack(alignment: .center) {
-                                      Text("No movies or error")
-                                  }
-                              }
-                          }
-                      }
-                      .onAppear {
-                          self.gameViewModel.loadGameData()
-                      }
-                      .navigationBarTitle(Text("Games"))
-           } .tabItem {
-                              Image(systemName: "keyboard")
-                              Text("Games")
-                      }
-            ProfileView()
-                .tabItem {
-                    Image(systemName: "person.fill")
-                    Text("Profile")
+            NavigationView {
+                VStack(alignment: .center) {
+                    if gameViewModel.loading {
+                        LoadingIndicator(color: Color.blue, size: 50)
+                    } else {
+                        if (gameViewModel.games.results.count > 0) {
+                            List(gameViewModel.games.results) { game in
+                                NavigationLink(destination: GameDetailView()){
+                                    GameRow(game: game)
+                                }
+                                
+                            }
+                        } else {
+                            VStack(alignment: .center) {
+                                Text("No Games or error")
+                            }
+                        }
+                    }
+                }
+                .onAppear {
+                    self.gameViewModel.loadGameData()
+                }
+                .navigationBarTitle(Text("Games"))
+            } .tabItem {
+                Image(systemName: "keyboard")
+                Text("Games")
+            }
+            NavigationView {
+                ProfileView()
+            }.tabItem {
+                Image(systemName: "person.fill")
+                Text("Profile")
             }
         }
     }

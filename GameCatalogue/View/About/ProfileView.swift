@@ -20,7 +20,7 @@ struct ProfileView: View {
             
             Text("Nyoman Putra Utama").font(.title).padding(.top,16)
             Text("putrautama30@gmail.com").font(.subheadline).padding(.top,16)
-        }
+            }.navigationBarTitle(Text("Profile"))
     }
 }
 
