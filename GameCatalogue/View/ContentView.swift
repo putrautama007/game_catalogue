@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 
 struct ContentView : View {
-    @ObservedObject var gameViewModel =  GameViewModel()
+    @ObservedObject var gameViewModel =  GameListViewModel()
     var body: some View {
         TabView {
             NavigationView {
@@ -20,7 +20,7 @@ struct ContentView : View {
                     } else {
                         if (gameViewModel.games.results.count > 0) {
                             List(gameViewModel.games.results) { game in
-                                NavigationLink(destination: GameDetailView()){
+                                NavigationLink(destination: GameDetailView(gameId: "\(game.id)")){
                                     GameRow(game: game)
                                 }
                                 

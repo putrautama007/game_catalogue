@@ -10,4 +10,5 @@ import Foundation
 
 protocol ServiceProtocol {
     func fetchGame(completion: @escaping ([Game]?) -> Void)
+    func fetchGameById(gameId : String,completion: @escaping (GameDetail?) -> Void)
 }
