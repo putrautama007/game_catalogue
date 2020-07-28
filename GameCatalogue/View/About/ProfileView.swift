@@ -12,15 +12,29 @@ struct ProfileView: View {
     var body: some View {
         VStack{
             Image("profile")
-                       .resizable()
-                       .frame(width: 150.0, height: 150.0)
-                       .clipShape(Circle())
-                       .overlay(Circle().stroke(Color.white, lineWidth: 4))
-                       .shadow(radius: 10)
+                .resizable()
+                .frame(width: 150.0, height: 150.0)
+                .clipShape(Circle())
+                .overlay(Circle().stroke(Color.white, lineWidth: 4))
+                .shadow(radius: 10)
             
             Text("Nyoman Putra Utama").font(.title).padding(.top,16)
-            Text("putrautama30@gmail.com").font(.subheadline).padding(.top,16)
-            }.navigationBarTitle(Text("Profile"))
+      
+            HStack{
+                Image("mail")
+                .resizable()
+                .frame(width: 20.0, height: 20.0)
+                Text("putrautama30@gmail.com").font(.subheadline)
+            }
+            
+            HStack{
+                Image("github")
+                .resizable()
+                .frame(width: 20.0, height: 20.0)
+                Text("putrautama007").font(.subheadline)
+            }
+            
+        }.navigationBarTitle(Text("Profile"))
     }
 }
 
