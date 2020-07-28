@@ -20,10 +20,9 @@ struct ContentView : View {
                     } else {
                         if (gameViewModel.games.results.count > 0) {
                             List(gameViewModel.games.results) { game in
-                                NavigationLink(destination: GameDetailView(gameId: "\(game.id)")){
+                                NavigationLink(destination: GameDetailView(gameId: "\(game.id)",backgroundImage: "\(game.backgroundImage)")){
                                     GameRow(game: game)
                                 }
-                                
                             }
                         } else {
                             VStack(alignment: .center) {

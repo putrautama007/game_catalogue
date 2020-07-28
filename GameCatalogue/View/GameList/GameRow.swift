@@ -13,7 +13,7 @@ struct GameRow: View {
     var game : Game
     var body: some View {
         HStack(alignment: .center) {
-            URLImage(URL(string:  "\(game.backGroundImage)")!, delay: 0.25) { proxy in
+            URLImage(URL(string:  "\(game.backgroundImage)")!, delay: 0.25) { proxy in
                 proxy.image.resizable()
                     .frame(width: 100, height: 120).cornerRadius(10)
             }

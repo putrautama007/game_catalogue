@@ -12,7 +12,8 @@ struct GameDetail: Codable, Identifiable{
     var id : Int
     var name : String
     var released : String
-    var backGroundImage : String
+    var backgroundImage : String
+    var backgroundImageAdditional : String
     var rating : Float
     var playtime : Int
     var metacritic : Int
@@ -23,11 +24,12 @@ struct GameDetail: Codable, Identifiable{
         case id
         case name
         case released
-        case backGroundImage = "background_image"
+        case backgroundImage = "background_image"
+        case backgroundImageAdditional = "background_image_additional"
         case rating
         case playtime
         case metacritic
         case addByStatus = "added_by_status"
-        case description = "reddit_description"
+        case description
     }
 }
