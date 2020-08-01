@@ -16,13 +16,12 @@ struct GameDetailView: View {
     var body: some View {
         VStack(alignment: .center){
             if gameDetailViewModel.loading {
-                 LoadingIndicator(color: Color.blue, size: 50)
+                VStack(alignment: .center){
+                    LoadingIndicator(color: Color.blue, size: 50)
+                }
             }else{
-                ScrollView{
+                List{
                     VStack(alignment: .leading){
-//                        Image("mail")
-//                            .resizable()
-//                            .frame(height: 250.0)
                         URLImage(URL(string:  "\(self.backgroundImage)")!) { proxy in
                             proxy.image.resizable()
                                 .frame(height: 250.0)
@@ -80,10 +79,7 @@ struct GameDetailView: View {
                                 
                             }.padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
                                 .frame(minWidth: 0, maxWidth: .infinity,  alignment: .leading)
-                        }.background(Color.white)
-                            .frame(minWidth: 0, maxWidth: .infinity,  alignment: .leading)
-                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 8, trailing: 0))
-                            .shadow(color: Color.black.opacity(0.2), radius: 7, x: 0, y: 2)
+                        }
                         
                         VStack(alignment: .leading){
                             Text("Game Description")
@@ -92,14 +88,12 @@ struct GameDetailView: View {
                                 .lineLimit(2)
                                 .font(Font.system(size:20))
                                 .padding(EdgeInsets(top: 8, leading: 16, bottom: 0, trailing: 16))
-                            Text("\(gameDetailViewModel.gameDetail.description)")
+                            Text("\(gameDetailViewModel.gameDetail.description.replacingOccurrences(of: "\r\n", with:"" ))")
                                 .multilineTextAlignment(.leading)
                                 .font(Font.system(size:18))
                                 .frame(minWidth: 0, maxWidth: .infinity,  alignment: .center)
-                                .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
-                        }.background(Color.white)
-                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 8, trailing: 0))
-                            .shadow(color: Color.black.opacity(0.2), radius: 7, x: 0, y: 2)
+                                .padding(EdgeInsets(top: 8, leading: 16, bottom: 0, trailing: 16))
+                        }
                         
                         VStack(alignment: .leading){
                             Text("Status")
@@ -169,12 +163,98 @@ struct GameDetailView: View {
                             .frame(minWidth: 0, maxWidth: .infinity,  alignment: .center)
                             .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
                             
-                        }.background(Color.white)
+                        }
+                        
+                        Text("Genres")
+                            .foregroundColor(.blue)
+                            .bold()
+                            .lineLimit(2)
+                            .font(Font.system(size:20))
                             .frame(minWidth: 0, maxWidth: .infinity,  alignment: .leading)
-                            .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
-                            .shadow(color: Color.black.opacity(0.2), radius: 7, x: 0, y: 2)
+                            .padding(EdgeInsets(top: 8, leading: 16, bottom: 0, trailing: 16))
+                        
+                        VStack(alignment: .leading){
+                            ScrollView(.horizontal,showsIndicators: false) {
+                                HStack(spacing: 10){
+                                    ForEach(gameDetailViewModel.gameDetail.genres) { tag in
+                                        Text("\(tag.name)")
+                                            .foregroundColor(.green)
+                                            .bold()
+                                            .font(Font.system(size:16))
+                                            .lineLimit(nil)
+                                            .padding(4)
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 25)
+                                                    .stroke(Color.black, lineWidth: 2)
+                                            )
+                                    }
+                                } .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+                                .frame(height: 30)
+                            }.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                        }
+                        
+                        
+                        
+                        Text("Tags")
+                            .foregroundColor(.blue)
+                            .bold()
+                            .lineLimit(2)
+                            .font(Font.system(size:20))
+                            .frame(minWidth: 0, maxWidth: .infinity,  alignment: .leading)
+                            .padding(EdgeInsets(top: 8, leading: 16, bottom: 0, trailing: 16))
+                        
+                        VStack(alignment: .leading){
+                            ScrollView(.horizontal,showsIndicators: false) {
+                                HStack(spacing: 10){
+                                    ForEach(gameDetailViewModel.gameDetail.tags) { tag in
+                                        Text("\(tag.name)")
+                                            .foregroundColor(.green)
+                                            .bold()
+                                            .font(Font.system(size:16))
+                                            .lineLimit(nil)
+                                            .padding(4)
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 25)
+                                                    .stroke(Color.black, lineWidth: 2)
+                                            )
+                                    }
+                                } .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+                                .frame(height: 30)
+                            }.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                        }
+                        
+                        Text("Publishers")
+                            .foregroundColor(.blue)
+                            .bold()
+                            .lineLimit(2)
+                            .font(Font.system(size:20))
+                            .frame(minWidth: 0, maxWidth: .infinity,  alignment: .leading)
+                            .padding(EdgeInsets(top: 8, leading: 16, bottom: 0, trailing: 16))
+                        
+                        VStack(alignment: .leading){
+                            ScrollView(.horizontal,showsIndicators: false) {
+                                HStack(spacing: 10){
+                                    ForEach(gameDetailViewModel.gameDetail.publishers) { publisher in
+                                        Text("\(publisher.name)")
+                                            .foregroundColor(.green)
+                                            .bold()
+                                            .font(Font.system(size:16))
+                                            .lineLimit(nil)
+                                            .padding(4)
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 25)
+                                                    .stroke(Color.black, lineWidth: 2)
+                                        )
+                                    }
+                                } .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+                                    .frame(height: 30)
+                            }.padding(EdgeInsets(top: 0, leading: 0, bottom: 8, trailing: 0))
+                        }
                     }
                 }
+                .padding(.leading, -20)
+                .padding(.trailing, -20)
+                
             }
         }.onAppear {
             self.gameDetailViewModel.loadGameDataById(id: self.gameId)

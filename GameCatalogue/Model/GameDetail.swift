@@ -19,6 +19,9 @@ struct GameDetail: Codable, Identifiable{
     var metacritic : Int
     var addByStatus : AddByStatus
     var description : String
+    var publishers : [GamePublisher]
+    var genres : [GameGenre]
+    var tags : [GameTag]
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -30,6 +33,9 @@ struct GameDetail: Codable, Identifiable{
         case playtime
         case metacritic
         case addByStatus = "added_by_status"
-        case description
+        case description = "description_raw"
+        case publishers
+        case genres
+        case tags
     }
 }
