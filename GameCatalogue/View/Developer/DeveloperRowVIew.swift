@@ -19,14 +19,11 @@ struct DeveloperRowVIew: View {
             }
             
             VStack(alignment: .leading) {
-                HStack {
-                    Text(developer.name)
-                        .foregroundColor(.blue)
-                        .lineLimit(2)
-                        .font(Font.system(size:22))
-                        .padding(.top,16)
-                    
-                }
+                Text(developer.name)
+                    .foregroundColor(.blue)
+                    .lineLimit(2)
+                    .font(Font.system(size:22))
+                    .padding(.top,16)
                 
                 HStack {
                     Image("playtime")

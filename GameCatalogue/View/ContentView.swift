@@ -25,9 +25,7 @@ struct ContentView : View {
                                 }
                             }
                         } else {
-                            VStack(alignment: .center) {
-                                Text("No Games or error")
-                            }
+                            ErrorView(text: "Games")
                         }
                     }
                 }

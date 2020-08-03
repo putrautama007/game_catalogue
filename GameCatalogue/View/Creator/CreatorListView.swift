@@ -22,9 +22,7 @@ struct CreatorListView: View {
                         }
                     }
                 } else {
-                    VStack(alignment: .center) {
-                        Text("No Creator or error")
-                    }
+                    ErrorView(text: "Creator")
                 }
             }
         }

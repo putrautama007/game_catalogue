@@ -22,9 +22,7 @@ struct DeveloperListView: View {
                         }
                     }
                 } else {
-                    VStack(alignment: .center) {
-                        Text("No Developer or error")
-                    }
+                    ErrorView(text: "Developer")
                 }
             }
         }
