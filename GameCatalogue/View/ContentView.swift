@@ -10,27 +10,50 @@ import Foundation
 import SwiftUI
 
 struct ContentView : View {
-   
+    @ObservedObject var gameViewModel =  GameListViewModel()
     var body: some View {
         TabView {
             NavigationView {
-                GameListView()
+                VStack(alignment: .center) {
+                    if gameViewModel.loading {
+                        LoadingIndicator(color: Color.blue, size: 50)
+                    } else {
+                        if (gameViewModel.games.results.count > 0) {
+                            List(gameViewModel.games.results) { game in
+                                NavigationLink(destination: GameDetailView(gameId: "\(game.id)",backgroundImage: "\(game.backgroundImage)")){
+                                    GameRow(game: game)
+                                }
+                            }
+                        } else {
+                            VStack(alignment: .center) {
+                                Text("No Games or error")
+                            }
+                        }
+                    }
+                }
+                .onAppear {
+                    self.gameViewModel.loadGameData()
+                }
+                .navigationBarTitle(Text("Games"))
             } .tabItem {
                 Image(systemName: "keyboard")
                 Text("Games")
             }
+            
             NavigationView {
                 DeveloperListView()
             } .tabItem {
                 Image(systemName: "gamecontroller.fill")
                 Text("Developer")
             }
+            
             NavigationView {
                 CreatorListView()
             } .tabItem {
                 Image(systemName: "person.2.fill")
                 Text("Creator")
             }
+            
             NavigationView {
                 ProfileView()
             }.tabItem {

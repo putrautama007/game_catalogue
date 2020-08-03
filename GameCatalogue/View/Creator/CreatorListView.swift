@@ -17,7 +17,9 @@ struct CreatorListView: View {
             } else {
                 if (creatorViewModel.creators.results.count > 0) {
                     List(creatorViewModel.creators.results) { creators in
-                        CreatorRowView(creator: creators)
+                        NavigationLink(destination: CreatorDetailView(creator: creators)){
+                            CreatorRowView(creator: creators)
+                        }
                     }
                 } else {
                     VStack(alignment: .center) {

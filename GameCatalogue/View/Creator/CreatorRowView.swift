@@ -13,20 +13,23 @@ struct CreatorRowView: View {
     var creator : Creator
     var body: some View {
         HStack(alignment: .center) {
-            URLImage(URL(string:  "\(creator.backgroundImage)")!, delay: 0.25) { proxy in
+            URLImage(URL(string:  "\(creator.image)")!, delay: 0.25) { proxy in
                 proxy.image.resizable()
                     .frame(width: 100, height: 120).cornerRadius(10)
             }
             
             VStack(alignment: .leading) {
-                HStack {
-                    Text(creator.name)
-                        .foregroundColor(.blue)
-                        .lineLimit(2)
-                        .font(Font.system(size:22))
-                        .padding(.top,16)
-                    
-                }
+                Text(creator.name)
+                    .foregroundColor(.blue)
+                    .lineLimit(2)
+                    .font(Font.system(size:22))
+                    .padding(.top,16)
+                
+                Text(creator.positions[0].name)
+                    .foregroundColor(.blue)
+                    .lineLimit(2)
+                    .font(Font.system(size:18))
+                    .padding(.top,8)
                 
                 HStack {
                     Image("playtime")

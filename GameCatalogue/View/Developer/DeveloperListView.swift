@@ -17,7 +17,9 @@ struct DeveloperListView: View {
             } else {
                 if (developerViewModel.developer.results.count > 0) {
                     List(developerViewModel.developer.results) { developer in
-                        DeveloperRowVIew(developer:developer)
+                        NavigationLink(destination: DeveloperDetailView(developer: developer)){
+                            DeveloperRowVIew(developer:developer)
+                        }
                     }
                 } else {
                     VStack(alignment: .center) {
