@@ -20,6 +20,18 @@ struct ContentView : View {
                 Text("Games")
             }
             NavigationView {
+                DeveloperListView()
+            } .tabItem {
+                Image(systemName: "gamecontroller.fill")
+                Text("Developer")
+            }
+            NavigationView {
+                CreatorListView()
+            } .tabItem {
+                Image(systemName: "person.2.fill")
+                Text("Creator")
+            }
+            NavigationView {
                 ProfileView()
             }.tabItem {
                 Image(systemName: "person.fill")

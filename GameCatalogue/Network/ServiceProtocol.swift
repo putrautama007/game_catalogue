@@ -11,4 +11,6 @@ import Foundation
 protocol ServiceProtocol {
     func fetchGame(completion: @escaping ([Game]?) -> Void)
     func fetchGameById(gameId : String,completion: @escaping (GameDetail?) -> Void)
+    func fetchDeveloper(completion: @escaping ([Developer]?) -> Void)
+    func fetchCreator(completion: @escaping ([Creator]?) -> Void)
 }
