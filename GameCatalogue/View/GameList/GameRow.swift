@@ -15,6 +15,7 @@ struct GameRow: View {
         HStack(alignment: .center) {
             URLImage(URL(string:  "\(game.backgroundImage)")!, delay: 0.25) { proxy in
                 proxy.image.resizable()
+                    .aspectRatio(contentMode: .fill)
                     .frame(width: 100, height: 120).cornerRadius(10)
             }
             

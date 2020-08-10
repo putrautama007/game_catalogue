@@ -74,9 +74,3 @@ struct DeveloperDetailView: View {
         
     }
 }
-
-//struct DeveloperDetailView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        DeveloperDetailView()
-//    }
-//}

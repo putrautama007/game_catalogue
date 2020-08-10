@@ -29,7 +29,6 @@ struct CreatorListView: View {
         .onAppear {
             self.creatorViewModel.loadCreatorData()
         }
-        .navigationBarTitle(Text("Creator"))
     }
 }
 

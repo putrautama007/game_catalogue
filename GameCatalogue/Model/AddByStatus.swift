@@ -6,7 +6,6 @@
 //  Copyright © 2020 Putra Utama. All rights reserved.
 //
 
-import Foundation
 
 struct AddByStatus: Codable {
     var yet: Int

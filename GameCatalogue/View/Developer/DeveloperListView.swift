@@ -29,7 +29,6 @@ struct DeveloperListView: View {
         .onAppear {
             self.developerViewModel.loadDeveloperData()
         }
-        .navigationBarTitle(Text("Developer"))
     }
 }
 

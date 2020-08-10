@@ -91,9 +91,3 @@ struct CreatorDetailView: View {
         .navigationBarTitle(Text(creator.name),displayMode: .inline)
     }
 }
-
-//struct CreatorDetailView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        CreatorDetailView()
-//    }
-//}

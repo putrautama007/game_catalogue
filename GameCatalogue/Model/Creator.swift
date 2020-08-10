@@ -9,13 +9,13 @@
 import Foundation
 
 struct Creator: Codable, Identifiable{
-    var id : Int
-    var name : String
-    var gamesCount : Int
-    var image : String
-    var backgroundImage : String
-    var games : [DeveloperGameList]
-    var positions : [Position]
+    var id: Int
+    var name: String
+    var gamesCount: Int
+    var image: String
+    var backgroundImage: String
+    var games: [DeveloperGameList]
+    var positions: [Position]
     
     
     enum CodingKeys: String, CodingKey {

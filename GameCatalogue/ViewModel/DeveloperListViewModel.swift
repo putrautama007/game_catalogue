@@ -10,7 +10,7 @@ import Combine
 
 class DeveloperListViewModel: ObservableObject {
     @Published var developer = DeveloperList(count: 0, next: "", results: [])
-    @Published var loading : Bool = false
+    @Published var loading: Bool = false
     
     let service: ServiceProtocol
     init(service: ServiceProtocol = APIService()) {

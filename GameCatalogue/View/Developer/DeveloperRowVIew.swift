@@ -15,6 +15,7 @@ struct DeveloperRowVIew: View {
         HStack(alignment: .center) {
             URLImage(URL(string:  "\(developer.backgroundImage)")!, delay: 0.25) { proxy in
                 proxy.image.resizable()
+                    .aspectRatio(contentMode: .fill)
                     .frame(width: 100, height: 120).cornerRadius(10)
             }
             
@@ -39,9 +40,3 @@ struct DeveloperRowVIew: View {
         .frame(height: 130)
     }
 }
-
-//struct DeveloperRowVIew_Previews: PreviewProvider {
-//    static var previews: some View {
-//        DeveloperRowVIew()
-//    }
-//}
