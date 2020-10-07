@@ -30,6 +30,12 @@ struct ContentView : View {
                         Text("Creator")
                 }
                 
+                FavoriteGameListView()
+                    .tabItem {
+                        Image(systemName: "bookmark.fill")
+                        Text("Favorite")
+                }
+                
                 ProfileView()
                     .tabItem {
                         Image(systemName: "person.fill")
