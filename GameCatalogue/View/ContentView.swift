@@ -10,27 +10,39 @@ import Foundation
 import SwiftUI
 
 struct ContentView : View {
-   
     var body: some View {
-        TabView {
-            NavigationView {
+        NavigationView{
+            TabView {
                 GameListView()
-            } .tabItem {
-                Image(systemName: "keyboard")
-                Text("Games")
-            }
-            NavigationView {
+                    .tabItem {
+                        Image(systemName: "keyboard")
+                        Text("Games")
+                }
+                DeveloperListView()
+                    .tabItem {
+                        Image(systemName: "gamecontroller.fill")
+                        Text("Developer")
+                }
+                
+                CreatorListView()
+                    .tabItem {
+                        Image(systemName: "person.2.fill")
+                        Text("Creator")
+                }
+                
+                FavoriteGameListView()
+                    .tabItem {
+                        Image(systemName: "bookmark.fill")
+                        Text("Favorite")
+                }
+                
                 ProfileView()
-            }.tabItem {
-                Image(systemName: "person.fill")
-                Text("Profile")
-            }
+                    .tabItem {
+                        Image(systemName: "person.fill")
+                        Text("Profile")
+                }
+                
+            }.navigationBarTitle(Text("Games Catalogue"),displayMode: .inline)
         }
     }
 }
-
-//struct ContentView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ContentView()
-//    }
-//}

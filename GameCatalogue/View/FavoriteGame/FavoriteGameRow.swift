@@ -1,19 +1,19 @@
 //
-//  GameRow.swift
+//  FavoriteGameView.swift
 //  GameCatalogue
 //
-//  Created by Putra Utama on 27/07/20.
+//  Created by Putra Utama on 07/10/20.
 //  Copyright © 2020 Putra Utama. All rights reserved.
 //
 
 import SwiftUI
 import URLImage
 
-struct GameRow: View {
-    var game : Game
+struct FavoriteGameRow: View {
+    var game : FavoriteGameViewModel
     var body: some View {
         HStack(alignment: .center) {
-            URLImage(URL(string:  "\(game.backgroundImage)")!, delay: 0.25) { proxy in
+            URLImage(URL(string:  "\(game.gameBackgroundImage)")!, delay: 0.25) { proxy in
                 proxy.image.resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 100, height: 120).cornerRadius(10)
@@ -21,7 +21,7 @@ struct GameRow: View {
             
             VStack(alignment: .leading) {
                 HStack {
-                    Text(game.name)
+                    Text(game.gameName)
                         .foregroundColor(.blue)
                         .lineLimit(2)
                         .font(Font.system(size:22))
@@ -32,20 +32,20 @@ struct GameRow: View {
                     Image("rating")
                         .resizable()
                         .frame(width: 20.0, height: 20.0)
-                    Text(game.rating.format())
+                    Text(game.gameRating.format())
                         .foregroundColor(Color.green)
                     
                     Image("calendar")
                         .resizable()
                         .frame(width: 20.0, height: 20.0)
-                    Text(game.released).foregroundColor(.blue)
+                    Text(game.gameRelease).foregroundColor(.blue)
                 }
                 
                 HStack {
                     Image("playtime")
                         .resizable()
                         .frame(width: 20.0, height: 20.0)
-                    Text("\(game.playtime) Hours")
+                    Text("\(game.gamePlaytime) Hours")
                         .foregroundColor(.green)
                         .lineLimit(nil)
                     
@@ -53,7 +53,7 @@ struct GameRow: View {
                         .resizable()
                         .frame(width: 20.0, height: 20.0)
                     
-                    Text("\(game.metacritic)")
+                    Text("\(game.gameMetacritic)")
                         .foregroundColor(.blue)
                         .lineLimit(nil)
                 }

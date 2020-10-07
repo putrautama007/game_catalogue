@@ -8,14 +8,14 @@
 
 import Foundation
 
-struct Game: Codable, Identifiable{
-    var id : Int
-    var name : String
-    var released : String
-    var backgroundImage : String
-    var rating : Float
-    var playtime : Int
-    var metacritic : Int
+struct Game: Codable, Identifiable {
+    var id: Int
+    var name: String
+    var released: String
+    var backgroundImage: String
+    var rating: Float
+    var playtime: Int
+    var metacritic: Int
     
     enum CodingKeys: String, CodingKey {
         case id

@@ -2,11 +2,12 @@
 //  GameListView.swift
 //  GameCatalogue
 //
-//  Created by Putra Utama on 03/08/20.
+//  Created by Putra Utama on 06/08/20.
 //  Copyright © 2020 Putra Utama. All rights reserved.
 //
 
 import SwiftUI
+import URLImage
 
 struct GameListView: View {
      @ObservedObject var gameViewModel =  GameListViewModel()
@@ -22,21 +23,18 @@ struct GameListView: View {
                         }
                     }
                 } else {
-                    VStack(alignment: .center) {
-                        Text("No Games or error")
-                    }
+                    ErrorView(text: "Games")
                 }
             }
         }
         .onAppear {
             self.gameViewModel.loadGameData()
         }
-        .navigationBarTitle(Text("Games"))
     }
 }
 
-//struct GameListView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        GameListView()
-//    }
-//}
+struct GameListView_Previews: PreviewProvider {
+    static var previews: some View {
+        GameListView()
+    }
+}
