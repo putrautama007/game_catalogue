@@ -7,16 +7,24 @@
 //
 
 import SwiftUI
-import URLImage
 
 struct GameDetailView: View {
     @State var isSaved = true
     var gameId : String
     var backgroundImage : String
+    var isImageAvailable : Bool
     @ObservedObject var gameDetailViewModel = GameDetailViewModel()
     @ObservedObject var addFavoriteGameViewModel = AddFavoriteGameViewModel()
     @ObservedObject var deleteFavoriteGameViewModel = DeleteFavoriteGameViewModel()
     @ObservedObject var loadFavoriteGameByIdViewModel = LoadFavoriteGameByIdViewModel()
+    @ObservedObject var remoteImage : RemoteImage = RemoteImage()
+    
+    init(gameId : String, backgroundImage : String) {
+        self.gameId = gameId
+        self.backgroundImage = backgroundImage
+        isImageAvailable = backgroundImage == "Unavailable!" ? false : true
+    }
+    
     var body: some View {
         VStack(alignment: .center){
             if gameDetailViewModel.loading {
@@ -26,8 +34,26 @@ struct GameDetailView: View {
             }else{
                 List{
                     VStack(alignment: .leading){
-                        URLImage(URL(string:  "\(self.backgroundImage)")!) { proxy in
-                            proxy.image.resizable()
+                        if isImageAvailable {
+                            if remoteImage.loadDone {
+                                if remoteImage.isValid {
+                                    Image(uiImage: remoteImage.imageFromRemote())
+                                        .resizable()
+                                        .frame(height: 250.0)
+                                } else {
+                                    Image(systemName: "exclamtionmark.square.fill")
+                                        .resizable()
+                                        .foregroundColor(.red)
+                                        .frame(height: 250.0)
+                                }
+                            } else {
+                                LoadingIndicator(color: Color.blue, size: 50)
+                                    .frame(width: UIScreen.main.bounds.size.width, height: 250.0, alignment: .center)
+                            }
+                        } else {
+                            Image(systemName: "exclamtionmark.square.fill")
+                                .resizable()
+                                .foregroundColor(.red)
                                 .frame(height: 250.0)
                         }
                         VStack{
@@ -82,7 +108,7 @@ struct GameDetailView: View {
                                 
                                 
                             }.padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
-                                .frame(minWidth: 0, maxWidth: .infinity,  alignment: .leading)
+                            .frame(minWidth: 0, maxWidth: .infinity,  alignment: .leading)
                         }
                         
                         VStack(alignment: .leading){
@@ -190,10 +216,10 @@ struct GameDetailView: View {
                                             .overlay(
                                                 RoundedRectangle(cornerRadius: 25)
                                                     .stroke(Color.black, lineWidth: 2)
-                                        )
+                                            )
                                     }
                                 } .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
-                                    .frame(height: 30)
+                                .frame(height: 30)
                             }.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                         }
                         
@@ -220,10 +246,10 @@ struct GameDetailView: View {
                                             .overlay(
                                                 RoundedRectangle(cornerRadius: 25)
                                                     .stroke(Color.black, lineWidth: 2)
-                                        )
+                                            )
                                     }
                                 } .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
-                                    .frame(height: 30)
+                                .frame(height: 30)
                             }.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                         }
                         
@@ -248,10 +274,10 @@ struct GameDetailView: View {
                                             .overlay(
                                                 RoundedRectangle(cornerRadius: 25)
                                                     .stroke(Color.black, lineWidth: 2)
-                                        )
+                                            )
                                     }
                                 } .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
-                                    .frame(height: 30)
+                                .frame(height: 30)
                             }.padding(EdgeInsets(top: 0, leading: 0, bottom: 8, trailing: 0))
                         }
                     }
@@ -263,41 +289,45 @@ struct GameDetailView: View {
         }.onAppear {
             self.gameDetailViewModel.loadGameDataById(id: self.gameId)
             self.loadFavoriteGameByIdViewModel.fetchFavoriteGameById(gameId: Int32(self.gameId)!)
-
+            self.remoteImage.setUrl(urlString: self.backgroundImage)
+            if self.isImageAvailable{
+                self.remoteImage.getRemoteImage()
+            }
+            
         }.navigationBarTitle(Text(gameDetailViewModel.gameDetail.name),displayMode: .inline)
-            .navigationBarItems(trailing: self.loadFavoriteGameByIdViewModel.favoriteGame.gameId == 0 || self.isSaved == false ?
-                Button(action:{
-                    self.addFavoriteGameViewModel.gameBackgroundImage = self.gameDetailViewModel.gameDetail.backgroundImage
-                    self.addFavoriteGameViewModel.gameBackgroundImageAdditional = self.gameDetailViewModel.gameDetail.backgroundImageAdditional
-                    self.addFavoriteGameViewModel.gameRating = self.gameDetailViewModel.gameDetail.rating
-                    self.addFavoriteGameViewModel.gameId = Int32(self.gameDetailViewModel.gameDetail.id)
-                    self.addFavoriteGameViewModel.gameName = self.gameDetailViewModel.gameDetail.name
-                    self.addFavoriteGameViewModel.gameMetacritic = Int32(self.gameDetailViewModel.gameDetail.metacritic)
-                    self.addFavoriteGameViewModel.gameRelease = self.gameDetailViewModel.gameDetail.released
-                    self.addFavoriteGameViewModel.gamePlaytime = Int32(self.gameDetailViewModel.gameDetail.playtime)
-                     self.addFavoriteGameViewModel.gameDescription = self.gameDetailViewModel.gameDetail.description
-                    
-                    let saved = self.addFavoriteGameViewModel.addFavoriteGame()
-                    if(saved){
-                        self.isSaved = saved
-                    }
-                    self.loadFavoriteGameByIdViewModel.fetchFavoriteGameById(gameId: Int32(self.gameId)!)
-                }){
-                    Image(systemName:"bookmark")
+        .navigationBarItems(trailing: self.loadFavoriteGameByIdViewModel.favoriteGame.gameId == 0 || self.isSaved == false ?
+                                Button(action:{
+                                    self.addFavoriteGameViewModel.gameBackgroundImage = self.gameDetailViewModel.gameDetail.backgroundImage
+                                    self.addFavoriteGameViewModel.gameBackgroundImageAdditional = self.gameDetailViewModel.gameDetail.backgroundImageAdditional
+                                    self.addFavoriteGameViewModel.gameRating = self.gameDetailViewModel.gameDetail.rating
+                                    self.addFavoriteGameViewModel.gameId = Int32(self.gameDetailViewModel.gameDetail.id)
+                                    self.addFavoriteGameViewModel.gameName = self.gameDetailViewModel.gameDetail.name
+                                    self.addFavoriteGameViewModel.gameMetacritic = Int32(self.gameDetailViewModel.gameDetail.metacritic)
+                                    self.addFavoriteGameViewModel.gameRelease = self.gameDetailViewModel.gameDetail.released
+                                    self.addFavoriteGameViewModel.gamePlaytime = Int32(self.gameDetailViewModel.gameDetail.playtime)
+                                    self.addFavoriteGameViewModel.gameDescription = self.gameDetailViewModel.gameDetail.description
+                                    
+                                    let saved = self.addFavoriteGameViewModel.addFavoriteGame()
+                                    if(saved){
+                                        self.isSaved = saved
+                                    }
+                                    self.loadFavoriteGameByIdViewModel.fetchFavoriteGameById(gameId: Int32(self.gameId)!)
+                                }){
+                                    Image(systemName:"bookmark")
+                                }
+            : Button(action:{
+                self.deleteFavoriteGameViewModel.gameId = Int32(self.gameDetailViewModel.gameDetail.id)
+                
+                let removed = self.deleteFavoriteGameViewModel.deleteFavoriteGame()
+                if(removed == true){
+                    self.isSaved = false
+                }else{
+                    self.isSaved = true
                 }
-                : Button(action:{
-                    self.deleteFavoriteGameViewModel.gameId = Int32(self.gameDetailViewModel.gameDetail.id)
-                    
-                    let removed = self.deleteFavoriteGameViewModel.deleteFavoriteGame()
-                    if(removed == true){
-                        self.isSaved = false
-                    }else{
-                         self.isSaved = true
-                    }
-                    self.loadFavoriteGameByIdViewModel.fetchFavoriteGameById(gameId: Int32(self.gameId)!)
-                }){
-                    Image(systemName:"bookmark.fill")
-                }
+                self.loadFavoriteGameByIdViewModel.fetchFavoriteGameById(gameId: Int32(self.gameId)!)
+            }){
+                Image(systemName:"bookmark.fill")
+            }
         )
     }
 }

@@ -7,24 +7,72 @@
 //
 
 import SwiftUI
-import URLImage
 
 struct CreatorDetailView: View {
     var creator : Creator
+    var isRemoteImageBackgroundAvailable : Bool
+    var isRemoteImageCreatorAvailable : Bool
+    @ObservedObject var remoteImageBackground : RemoteImage = RemoteImage()
+    @ObservedObject var remoteImageCreator : RemoteImage = RemoteImage()
+    
+    init(creator : Creator) {
+        self.creator = creator
+        isRemoteImageBackgroundAvailable = creator.backgroundImage == "Unavailable!" ? false : true
+        isRemoteImageCreatorAvailable = creator.image == "Unavailable!" ? false : true
+    }
     var body: some View {
         ScrollView{
             VStack(alignment: .leading){
-                URLImage(URL(string:  "\(creator.backgroundImage)")!) { proxy in
-                    proxy.image.resizable()
+                if isRemoteImageBackgroundAvailable {
+                    if remoteImageBackground.loadDone {
+                        if remoteImageBackground.isValid {
+                            Image(uiImage: remoteImageBackground.imageFromRemote())
+                                .resizable()
+                                .frame(height: 250.0)
+                        } else {
+                            Image(systemName: "exclamtionmark.square.fill")
+                                .resizable()
+                                .foregroundColor(.red)
+                                .frame(height: 250.0)
+                        }
+                    } else {
+                        LoadingIndicator(color: Color.blue, size: 50)
+                            .frame(width: UIScreen.main.bounds.size.width, height: 250.0, alignment: .center)
+                    }
+                } else {
+                    Image(systemName: "exclamtionmark.square.fill")
+                        .resizable()
+                        .foregroundColor(.red)
                         .frame(height: 250.0)
                 }
                 VStack{
                     HStack{
-                        URLImage(URL(string:  "\(creator.image)")!) { proxy in
-                            proxy.image.resizable()
+                        if isRemoteImageCreatorAvailable {
+                            if remoteImageCreator.loadDone {
+                                if remoteImageCreator.isValid {
+                                    Image(uiImage: remoteImageCreator.imageFromRemote())
+                                        .resizable()
+                                        .frame(width: 64.0, height: 64.0)
+                                        .cornerRadius(10)
+                                        .padding(EdgeInsets(top: 8, leading: 16, bottom: 0, trailing: 0))
+                                } else {
+                                    Image(systemName: "exclamtionmark.square.fill")
+                                        .resizable()
+                                        .foregroundColor(.red)
+                                        .frame(width: 64.0, height: 64.0)
+                                        .cornerRadius(10)
+                                        
+                                }
+                            } else {
+                                LoadingIndicator(color: Color.blue, size: 25)
+                                    .frame(width: 64.0, height: 64.0)
+                            }
+                        } else {
+                            Image(systemName: "exclamtionmark.square.fill")
+                                .resizable()
+                                .foregroundColor(.red)
                                 .frame(width: 64.0, height: 64.0)
                                 .cornerRadius(10)
-                                .padding(EdgeInsets(top: 8, leading: 16, bottom: 0, trailing: 0))
                         }
                         
                         VStack{
@@ -85,6 +133,16 @@ struct CreatorDetailView: View {
                         
                     } .padding(EdgeInsets(top: 8, leading: 16, bottom: 0, trailing: 16))
                     
+                }
+            }
+            .onAppear(){
+                self.remoteImageBackground.setUrl(urlString: creator.backgroundImage)
+                if self.isRemoteImageBackgroundAvailable{
+                    self.remoteImageBackground.getRemoteImage()
+                }
+                self.remoteImageCreator.setUrl(urlString: creator.image)
+                if self.isRemoteImageCreatorAvailable{
+                    self.remoteImageCreator.getRemoteImage()
                 }
             }
         }

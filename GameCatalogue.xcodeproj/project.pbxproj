@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -25,6 +25,7 @@
 		4028017824D44D19008230DF /* GamePublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4028017724D44D19008230DF /* GamePublisher.swift */; };
 		4028017A24D44F06008230DF /* GameGenre.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4028017924D44F06008230DF /* GameGenre.swift */; };
 		4028017C24D45959008230DF /* GameTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4028017B24D45959008230DF /* GameTag.swift */; };
+		4060AEC625318BE70042A264 /* RemoteImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4060AEC525318BE70042A264 /* RemoteImage.swift */; };
 		406485EB24DC429800E7F481 /* GameListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406485EA24DC429800E7F481 /* GameListView.swift */; };
 		406617E124D0275D00E1EB90 /* AddByStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406617E024D0275D00E1EB90 /* AddByStatus.swift */; };
 		406617E324D041E900E1EB90 /* GameDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406617E224D041E900E1EB90 /* GameDetail.swift */; };
@@ -50,7 +51,6 @@
 		40BA738A24CEC52D002F55E3 /* GameRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BA738924CEC52D002F55E3 /* GameRow.swift */; };
 		40BA738C24CEC69B002F55E3 /* GameDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BA738B24CEC69B002F55E3 /* GameDetailView.swift */; };
 		40BA738F24CEC800002F55E3 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BA738E24CEC800002F55E3 /* Extension.swift */; };
-		40FA3DBF24C72D9E00A4798A /* URLImage in Frameworks */ = {isa = PBXBuildFile; productRef = 40FA3DBE24C72D9E00A4798A /* URLImage */; };
 		40FCD9A624BDFB710051BAD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FCD9A524BDFB710051BAD4 /* AppDelegate.swift */; };
 		40FCD9A824BDFB710051BAD4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FCD9A724BDFB710051BAD4 /* SceneDelegate.swift */; };
 		40FCD9AA24BDFB710051BAD4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FCD9A924BDFB710051BAD4 /* ContentView.swift */; };
@@ -79,6 +79,7 @@
 		4028017724D44D19008230DF /* GamePublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePublisher.swift; sourceTree = "<group>"; };
 		4028017924D44F06008230DF /* GameGenre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameGenre.swift; sourceTree = "<group>"; };
 		4028017B24D45959008230DF /* GameTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTag.swift; sourceTree = "<group>"; };
+		4060AEC525318BE70042A264 /* RemoteImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteImage.swift; sourceTree = "<group>"; };
 		406485EA24DC429800E7F481 /* GameListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameListView.swift; sourceTree = "<group>"; };
 		406617E024D0275D00E1EB90 /* AddByStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddByStatus.swift; sourceTree = "<group>"; };
 		406617E224D041E900E1EB90 /* GameDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetail.swift; sourceTree = "<group>"; };
@@ -120,7 +121,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				40FA3DBF24C72D9E00A4798A /* URLImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,17 +202,18 @@
 			isa = PBXGroup;
 			children = (
 				40BA738E24CEC800002F55E3 /* Extension.swift */,
+				4060AEC525318BE70042A264 /* RemoteImage.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
 		};
-		40FA3DB624C72CB500A4798A /* Network */ = {
+		40FA3DB624C72CB500A4798A /* Remote */ = {
 			isa = PBXGroup;
 			children = (
 				40BA738124CEC233002F55E3 /* ServiceProtocol.swift */,
 				40BA737F24CEC1B7002F55E3 /* APIService.swift */,
 			);
-			path = Network;
+			path = Remote;
 			sourceTree = "<group>";
 		};
 		40FCD99924BDFB710051BAD4 = {
@@ -241,7 +242,7 @@
 				40FCD9B324BDFB770051BAD4 /* Info.plist */,
 				40FCD9B024BDFB770051BAD4 /* LaunchScreen.storyboard */,
 				40FCD9BA24BDFC160051BAD4 /* Model */,
-				40FA3DB624C72CB500A4798A /* Network */,
+				40FA3DB624C72CB500A4798A /* Remote */,
 				40FCD9AD24BDFB770051BAD4 /* Preview Content */,
 				40FCD9A724BDFB710051BAD4 /* SceneDelegate.swift */,
 				40BA738D24CEC7F1002F55E3 /* Util */,
@@ -330,7 +331,6 @@
 			);
 			name = GameCatalogue;
 			packageProductDependencies = (
-				40FA3DBE24C72D9E00A4798A /* URLImage */,
 			);
 			productName = GameCatalogue;
 			productReference = 40FCD9A224BDFB710051BAD4 /* GameCatalogue.app */;
@@ -361,7 +361,6 @@
 			);
 			mainGroup = 40FCD99924BDFB710051BAD4;
 			packageReferences = (
-				40FA3DBD24C72D9E00A4798A /* XCRemoteSwiftPackageReference "url-image" */,
 			);
 			productRefGroup = 40FCD9A324BDFB710051BAD4 /* Products */;
 			projectDirPath = "";
@@ -417,6 +416,7 @@
 				40BA738824CEC346002F55E3 /* LoadingIndicator.swift in Sources */,
 				406BAFF7253059CC000FDC16 /* NSManagedContextExtension.swift in Sources */,
 				4001D8EF24D80D8E006872BC /* CreatorRowView.swift in Sources */,
+				4060AEC625318BE70042A264 /* RemoteImage.swift in Sources */,
 				4001D8E524D807A3006872BC /* CreatorListViewModel.swift in Sources */,
 				40FCD9A624BDFB710051BAD4 /* AppDelegate.swift in Sources */,
 				40FCD9A824BDFB710051BAD4 /* SceneDelegate.swift in Sources */,
@@ -632,25 +632,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		40FA3DBD24C72D9E00A4798A /* XCRemoteSwiftPackageReference "url-image" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/dmytro-anokhin/url-image.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.9.19;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		40FA3DBE24C72D9E00A4798A /* URLImage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 40FA3DBD24C72D9E00A4798A /* XCRemoteSwiftPackageReference "url-image" */;
-			productName = URLImage;
-		};
-/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		406BAFEB25305999000FDC16 /* GameCatalogue.xcdatamodeld */ = {

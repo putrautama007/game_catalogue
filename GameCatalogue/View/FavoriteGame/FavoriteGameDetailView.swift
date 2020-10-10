@@ -7,15 +7,23 @@
 //
 
 import SwiftUI
-import URLImage
 
 struct FavoriteGameDetailView: View {
     @State var isSaved = true
     var gameId : String
     var backgroundImage : String
+    var isImageAvailable : Bool
     @ObservedObject var addFavoriteGameViewModel = AddFavoriteGameViewModel()
     @ObservedObject var deleteFavoriteGameViewModel = DeleteFavoriteGameViewModel()
     @ObservedObject var loadFavoriteGameByIdViewModel = LoadFavoriteGameByIdViewModel()
+    @ObservedObject var remoteImage : RemoteImage = RemoteImage()
+    
+    init(gameId : String, backgroundImage : String) {
+        self.gameId = gameId
+        self.backgroundImage = backgroundImage
+        isImageAvailable = backgroundImage == "Unavailable!" ? false : true
+    }
+    
     var body: some View {
         VStack(alignment: .center){
             if loadFavoriteGameByIdViewModel.loading {
@@ -25,8 +33,26 @@ struct FavoriteGameDetailView: View {
             }else{
                 List{
                     VStack(alignment: .leading){
-                        URLImage(URL(string:  "\(self.backgroundImage)")!) { proxy in
-                            proxy.image.resizable()
+                        if isImageAvailable {
+                            if remoteImage.loadDone {
+                                if remoteImage.isValid {
+                                    Image(uiImage: remoteImage.imageFromRemote())
+                                        .resizable()
+                                        .frame(height: 250.0)
+                                } else {
+                                    Image(systemName: "exclamtionmark.square.fill")
+                                        .resizable()
+                                        .foregroundColor(.red)
+                                        .frame(height: 250.0)
+                                }
+                            } else {
+                                LoadingIndicator(color: Color.blue, size: 50)
+                                    .frame(width: UIScreen.main.bounds.size.width, height: 250.0, alignment: .center)
+                            }
+                        } else {
+                            Image(systemName: "exclamtionmark.square.fill")
+                                .resizable()
+                                .foregroundColor(.red)
                                 .frame(height: 250.0)
                         }
                         VStack{
@@ -105,6 +131,10 @@ struct FavoriteGameDetailView: View {
             }
         }.onAppear {
             self.loadFavoriteGameByIdViewModel.fetchFavoriteGameById(gameId: Int32(self.gameId)!)
+            self.remoteImage.setUrl(urlString: self.backgroundImage)
+            if self.isImageAvailable{
+                self.remoteImage.getRemoteImage()
+            }
 
         }.navigationBarTitle(Text(loadFavoriteGameByIdViewModel.favoriteGame.gameName!),displayMode: .inline)
             .navigationBarItems(trailing: self.isSaved == false ?

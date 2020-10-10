@@ -7,16 +7,43 @@
 //
 
 import SwiftUI
-import URLImage
 
 struct FavoriteGameRow: View {
     var game : FavoriteGameViewModel
+    var isImageAvailable : Bool
+    @ObservedObject var remoteImage : RemoteImage = RemoteImage()
+    
+    init(game : FavoriteGameViewModel) {
+        self.game = game
+        isImageAvailable = game.favoriteGame.gameBackgroundImage == "Unavailable!" ? false : true
+    }
+    
     var body: some View {
         HStack(alignment: .center) {
-            URLImage(URL(string:  "\(game.gameBackgroundImage)")!, delay: 0.25) { proxy in
-                proxy.image.resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 100, height: 120).cornerRadius(10)
+            if isImageAvailable {
+                if remoteImage.loadDone {
+                    if remoteImage.isValid {
+                        Image(uiImage: remoteImage.imageFromRemote())
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 100, height: 120).cornerRadius(10)
+                    } else {
+                        Image(systemName: "exclamtionmark.square.fill")
+                            .resizable()
+                            .foregroundColor(.red)
+                            .frame(width: 100, height: 120)
+                            .cornerRadius(10)
+                    }
+                } else {
+                    LoadingIndicator(color: Color.blue, size: 25)
+                        .frame(width: 100, height: 120)
+                }
+            } else {
+                Image(systemName: "exclamtionmark.square.fill")
+                    .resizable()
+                    .foregroundColor(.red)
+                    .frame(width: 100, height: 120)
+                    .cornerRadius(10)
             }
             
             VStack(alignment: .leading) {
@@ -61,5 +88,11 @@ struct FavoriteGameRow: View {
         }
         .cornerRadius(10)
         .frame(height: 130)
+        .onAppear(){
+            self.remoteImage.setUrl(urlString: game.favoriteGame.gameBackgroundImage ?? "")
+            if self.isImageAvailable{
+                self.remoteImage.getRemoteImage()
+            }
+        }
     }
 }

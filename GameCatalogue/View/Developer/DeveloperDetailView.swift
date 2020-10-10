@@ -7,15 +7,40 @@
 //
 
 import SwiftUI
-import URLImage
 
 struct DeveloperDetailView: View {
     var developer : Developer
+    var isImageAvailable : Bool
+    @ObservedObject var remoteImage : RemoteImage = RemoteImage()
+    
+    init(developer : Developer) {
+        self.developer = developer
+        isImageAvailable = developer.backgroundImage == "Unavailable!" ? false : true
+    }
+    
     var body: some View {
         ScrollView{
             VStack(alignment: .leading){
-                URLImage(URL(string:  "\(developer.backgroundImage)")!) { proxy in
-                    proxy.image.resizable()
+                if isImageAvailable {
+                    if remoteImage.loadDone {
+                        if remoteImage.isValid {
+                            Image(uiImage: remoteImage.imageFromRemote())
+                                .resizable()
+                                .frame(height: 250.0)
+                        } else {
+                            Image(systemName: "exclamtionmark.square.fill")
+                                .resizable()
+                                .foregroundColor(.red)
+                                .frame(height: 250.0)
+                        }
+                    } else {
+                        LoadingIndicator(color: Color.blue, size: 50)
+                            .frame(width: UIScreen.main.bounds.size.width, height: 250.0, alignment: .center)
+                    }
+                } else {
+                    Image(systemName: "exclamtionmark.square.fill")
+                        .resizable()
+                        .foregroundColor(.red)
                         .frame(height: 250.0)
                 }
                 VStack{
@@ -41,7 +66,7 @@ struct DeveloperDetailView: View {
                         
                         
                     }.padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
-                        .frame(minWidth: 0, maxWidth: .infinity,  alignment: .leading)
+                    .frame(minWidth: 0, maxWidth: .infinity,  alignment: .leading)
                 }
                 
                 Text("Games")
@@ -63,14 +88,21 @@ struct DeveloperDetailView: View {
                             .overlay(
                                 RoundedRectangle(cornerRadius: 25)
                                     .stroke(Color.black, lineWidth: 2)
-                        )
+                            )
                         
                     } .padding(EdgeInsets(top: 8, leading: 16, bottom: 0, trailing: 16))
                     
                 }
             }
+            .onAppear(){
+                self.remoteImage.setUrl(urlString: developer.backgroundImage)
+                if self.isImageAvailable{
+                    self.remoteImage.getRemoteImage()
+                }
+            }
         }
         .navigationBarTitle(Text(developer.name),displayMode: .inline)
+        
         
     }
 }
