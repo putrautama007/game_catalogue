@@ -107,7 +107,7 @@ struct FavoriteGameDetailView: View {
                                 
                                 
                             }.padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
-                                .frame(minWidth: 0, maxWidth: .infinity,  alignment: .leading)
+                            .frame(minWidth: 0, maxWidth: .infinity,  alignment: .leading)
                         }
                         
                         VStack(alignment: .leading){
@@ -135,38 +135,42 @@ struct FavoriteGameDetailView: View {
             if self.isImageAvailable{
                 self.remoteImage.getRemoteImage()
             }
-
+            
         }.navigationBarTitle(Text(loadFavoriteGameByIdViewModel.favoriteGame.gameName!),displayMode: .inline)
-            .navigationBarItems(trailing: self.isSaved == false ?
-                Button(action:{
-                    self.addFavoriteGameViewModel.gameBackgroundImage = self.loadFavoriteGameByIdViewModel.favoriteGame.gameBackgroundImage!
-                    self.addFavoriteGameViewModel.gameBackgroundImageAdditional = self.loadFavoriteGameByIdViewModel.favoriteGame.gameBackgroundImageAdditional!
-                    self.addFavoriteGameViewModel.gameRating = self.loadFavoriteGameByIdViewModel.favoriteGame.gameRating!
-                    self.addFavoriteGameViewModel.gameId = self.loadFavoriteGameByIdViewModel.favoriteGame.gameId!
-                    self.addFavoriteGameViewModel.gameName = self.loadFavoriteGameByIdViewModel.favoriteGame.gameName!
-                    self.addFavoriteGameViewModel.gameMetacritic = self.loadFavoriteGameByIdViewModel.favoriteGame.gameMetacritic!
-                    self.addFavoriteGameViewModel.gameRelease = self.loadFavoriteGameByIdViewModel.favoriteGame.gameRelease!
-                    self.addFavoriteGameViewModel.gamePlaytime = self.loadFavoriteGameByIdViewModel.favoriteGame.gamePlaytime!
-                    
-                    let saved = self.addFavoriteGameViewModel.addFavoriteGame()
-                    if(saved){
-                        self.isSaved = saved
-                    }
-                }){
-                    Image(systemName:"bookmark")
-                }
-                : Button(action:{
+        .navigationBarItems(trailing: self.isSaved == false ?
+                                Button(action:{
+                                    if self.loadFavoriteGameByIdViewModel.favoriteGame.gameId != 0 {
+                                        self.addFavoriteGameViewModel.gameBackgroundImage = self.loadFavoriteGameByIdViewModel.favoriteGame.gameBackgroundImage!
+                                        self.addFavoriteGameViewModel.gameBackgroundImageAdditional = self.loadFavoriteGameByIdViewModel.favoriteGame.gameBackgroundImageAdditional!
+                                        self.addFavoriteGameViewModel.gameRating = self.loadFavoriteGameByIdViewModel.favoriteGame.gameRating!
+                                        self.addFavoriteGameViewModel.gameId = self.loadFavoriteGameByIdViewModel.favoriteGame.gameId!
+                                        self.addFavoriteGameViewModel.gameName = self.loadFavoriteGameByIdViewModel.favoriteGame.gameName!
+                                        self.addFavoriteGameViewModel.gameMetacritic = self.loadFavoriteGameByIdViewModel.favoriteGame.gameMetacritic!
+                                        self.addFavoriteGameViewModel.gameRelease = self.loadFavoriteGameByIdViewModel.favoriteGame.gameRelease!
+                                        self.addFavoriteGameViewModel.gamePlaytime = self.loadFavoriteGameByIdViewModel.favoriteGame.gamePlaytime!
+                                        
+                                        let saved = self.addFavoriteGameViewModel.addFavoriteGame()
+                                        if(saved){
+                                            self.isSaved = saved
+                                        }
+                                    }
+                                }){
+                                    Image(systemName:"bookmark")
+                                }
+            : Button(action:{
+                if self.loadFavoriteGameByIdViewModel.favoriteGame.gameId != 0 {
                     self.deleteFavoriteGameViewModel.gameId = self.loadFavoriteGameByIdViewModel.favoriteGame.gameId!
                     
                     let removed = self.deleteFavoriteGameViewModel.deleteFavoriteGame()
                     if(removed == true){
                         self.isSaved = false
                     }else{
-                         self.isSaved = true
+                        self.isSaved = true
                     }
-                }){
-                    Image(systemName:"bookmark.fill")
                 }
+            }){
+                Image(systemName:"bookmark.fill")
+            }
         )
     }
 }
