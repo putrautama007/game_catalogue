@@ -9,7 +9,7 @@
 import Combine
 
 class CreatorListViewModel: ObservableObject {
-    @Published var creators = CreatorList(count: 0, next: "", results: [])
+    @Published var creators = CreatorList(results: [])
     @Published var loading : Bool = false
     
     let service: ServiceProtocol

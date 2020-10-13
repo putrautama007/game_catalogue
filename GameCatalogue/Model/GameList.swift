@@ -8,14 +8,6 @@
 
 import Foundation
 
-struct GameList: Codable{
-    var count : Int
-    var next : String
+struct GameList: Decodable{
     var results : [Game]
-    
-    enum CodingKeys: String, CodingKey {
-        case count
-        case next
-        case results
-    }
 }

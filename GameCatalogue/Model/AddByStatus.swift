@@ -8,19 +8,10 @@
 
 
 struct AddByStatus: Codable {
-    var yet: Int
-    var owned: Int
-    var beaten: Int
-    var toplay: Int
-    var dropped: Int
-    var playing: Int
-    
-    enum CodingKeys: String, CodingKey {
-        case yet
-        case owned
-        case beaten
-        case toplay
-        case dropped
-        case playing
-    }
+    let yet: Int
+    let owned: Int
+    let beaten: Int
+    let toplay: Int
+    let dropped: Int
+    let playing: Int
 }

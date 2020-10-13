@@ -15,7 +15,7 @@ struct GameListView: View {
             if gameViewModel.loading {
                 LoadingIndicator(color: Color.blue, size: 50)
             } else {
-                if (gameViewModel.games.results.count > 0) {
+                if (!gameViewModel.games.results.isEmpty) {
                     List(gameViewModel.games.results) { game in
                         NavigationLink(destination: GameDetailView(gameId: "\(game.id)",backgroundImage: "\(game.backgroundImage)")){
                             GameRow(game: game)
@@ -27,7 +27,10 @@ struct GameListView: View {
             }
         }
         .onAppear {
-            self.gameViewModel.loadGameData()
+            if !(!self.gameViewModel.games.results.isEmpty) {
+                self.gameViewModel.loadGameData()
+                            }
+            
         }
     }
 }

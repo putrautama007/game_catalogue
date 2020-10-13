@@ -9,13 +9,9 @@
 import Foundation
 
 struct DeveloperList: Codable {
-    var count : Int
-    var next : String
     var results : [Developer]
     
     enum CodingKeys: String, CodingKey {
-        case count
-        case next
         case results
     }
 }

@@ -8,12 +8,7 @@
 
 import Foundation
 
-struct GameGenre : Codable,Identifiable {
-    var id : Int
-    var name : String
-    
-    enum CodingKeys: String, CodingKey {
-        case id
-        case name
-    }
+struct GameGenre : Decodable,Identifiable {
+    let id : Int
+    let name : String
 }

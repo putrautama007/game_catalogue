@@ -7,9 +7,10 @@
 //
 
 import Combine
+import Foundation
 
 class GameListViewModel: ObservableObject {
-    @Published var games =  GameList(count: 0, next: "", results: [])
+    @Published var games =  GameList(results: [])
     @Published var loading = false
     
     let service: ServiceProtocol
@@ -20,11 +21,16 @@ class GameListViewModel: ObservableObject {
     func loadGameData(){
         self.loading = true
         service.fetchGame{games in
-            self.loading = false
+            
             guard let games = games else{
                 return
             }
-            self.games.results = games
+            
+            DispatchQueue.main.async {
+                self.loading = false
+                self.games.results = games
+            }
+            
         }
     }
 }
